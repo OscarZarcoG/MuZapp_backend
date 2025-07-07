@@ -20,9 +20,9 @@ class ClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.filter(is_active=True)
     serializer_class = ClienteSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['frecuencia']
-    search_fields = ['nombre_cliente', 'telefono_cliente']
-    ordering_fields = ['nombre_cliente', 'frecuencia', 'created_at']
+    filterset_fields = ['frecuencia', 'tipo_cliente']
+    search_fields = ['nombre', 'apellidos', 'telefono', 'email', 'empresa']
+    ordering_fields = ['nombre', 'apellidos', 'frecuencia', 'created_at']
     ordering = ['-created_at']
 
     @action(detail=True, methods=['post'])
@@ -38,10 +38,17 @@ class EquipoAudioViewSet(viewsets.ModelViewSet):
     queryset = Equipo_Audio.objects.filter(is_active=True)
     serializer_class = EquipoAudioSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['marca', 'numero_bocinas']
-    search_fields = ['marca', 'modelo', 'descripcion']
-    ordering_fields = ['marca', 'modelo', 'precio', 'created_at']
+    filterset_fields = ['tipo', 'estado', 'marca', 'ubicacion']
+    search_fields = ['nombre', 'marca', 'modelo', 'numero_serie', 'descripcion', 'observaciones']
+    ordering_fields = ['nombre', 'tipo', 'estado', 'marca', 'modelo', 'precio_compra', 'fecha_compra', 'created_at']
     ordering = ['-created_at']
+
+    @action(detail=True, methods=['post'])
+    def restore(self, request, pk=None):
+        """Restaurar equipo eliminado"""
+        equipo = self.get_object()
+        equipo.restore()
+        return Response({'status': 'Equipo restaurado'})
 
     @action(detail=False, methods=['get'])
     def por_precio(self, request):
@@ -49,13 +56,34 @@ class EquipoAudioViewSet(viewsets.ModelViewSet):
         precio_min = request.query_params.get('precio_min', 0)
         precio_max = request.query_params.get('precio_max', 999999)
         
+        # Usar precio_compra en lugar de precio
         equipos = self.queryset.filter(
-            precio__gte=precio_min,
-            precio__lte=precio_max
+            precio_compra__gte=precio_min,
+            precio_compra__lte=precio_max
         )
         
         serializer = self.get_serializer(equipos, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def por_estado(self, request):
+        """Filtrar equipos por estado"""
+        estado = request.query_params.get('estado')
+        if estado:
+            equipos = self.queryset.filter(estado=estado)
+            serializer = self.get_serializer(equipos, many=True)
+            return Response(serializer.data)
+        return Response({'error': 'Estado requerido'}, status=400)
+
+    @action(detail=False, methods=['get'])
+    def por_tipo(self, request):
+        """Filtrar equipos por tipo"""
+        tipo = request.query_params.get('tipo')
+        if tipo:
+            equipos = self.queryset.filter(tipo=tipo)
+            serializer = self.get_serializer(equipos, many=True)
+            return Response(serializer.data)
+        return Response({'error': 'Tipo requerido'}, status=400)
 
 
 class CateringViewSet(viewsets.ModelViewSet):
@@ -212,22 +240,26 @@ class ContratoViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def generar_pdf(self, request, pk=None):
-        """Generar contrato en PDF"""
+        """Generar contrato en PDF usando ReportLab (rápido)"""
         contrato = self.get_object()
-        # Aquí se implementará la generación del PDF
-        # Por ahora retornamos un mensaje
-        return Response({
-            'message': 'Funcionalidad de PDF en desarrollo',
-            'contrato': contrato.numero_contrato
-        })
+        try:
+            response = contrato.generar_contrato_pdf()
+            return response
+        except Exception as e:
+            return Response(
+                {'error': f'Error al generar PDF: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     @action(detail=True, methods=['get'])
     def generar_docx(self, request, pk=None):
         """Generar contrato en DOCX"""
         contrato = self.get_object()
-        # Aquí se implementará la generación del DOCX
-        # Por ahora retornamos un mensaje
-        return Response({
-            'message': 'Funcionalidad de DOCX en desarrollo',
-            'contrato': contrato.numero_contrato
-        })
+        try:
+            response = contrato.generar_contrato_docx()
+            return response
+        except Exception as e:
+            return Response(
+                {'error': f'Error al generar DOCX: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

@@ -6,6 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="4ea7f9c9-b6ac-429c-99c3-56973e2d91fd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgendaMusicos/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AgendaMusicos/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/modelos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/serializador.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/examples/view.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GIGS/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GIGS/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,18 +38,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "OscarZarcoG"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;OscarZarcoG&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/OscarZarcoG/agenda_musicos.git",
-    "accountId": "28b0affa-e29b-42e9-bdf7-7f950eee304d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/OscarZarcoG/agenda_musicos.git&quot;,
+    &quot;accountId&quot;: &quot;28b0affa-e29b-42e9-bdf7-7f950eee304d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -48,38 +61,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.AgendaMusicos.executor": "Run",
-    "Django Server.RUNSERVER ETHERNET.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "Database connection parameters found",
-    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
-    "Python.MAKEMIGRATIONS.executor": "Run",
-    "Python.MIGRATE.executor": "Run",
-    "Python.RUN SERVER DHCP.executor": "Run",
-    "Python.RUNSERVER EHTERNET.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/oscar/Documents/Programacion/python/AgendaMusicos",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.AgendaMusicos.executor&quot;: &quot;Run&quot;,
+    &quot;Django Server.RUNSERVER ETHERNET.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;Database connection parameters found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;Python.MAKEMIGRATIONS.executor&quot;: &quot;Run&quot;,
+    &quot;Python.MIGRATE.executor&quot;: &quot;Run&quot;,
+    &quot;Python.RUN SERVER DHCP.executor&quot;: &quot;Run&quot;,
+    &quot;Python.RUNSERVER EHTERNET.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oscar/Documents/Programacion/python/AgendaMusicos&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.RUNSERVER EHTERNET">
     <configuration name="MAKEMIGRATIONS" type="PythonConfigurationType" factoryName="Python">
       <module name="AgendaMusicos" />
@@ -169,7 +182,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
-      <option name="PARAMETERS" value="runserver 192.168.1.78:8000" />
+      <option name="PARAMETERS" value="runserver 192.168.1.71:8000" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -204,11 +217,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django Server.RUNSERVER ETHERNET" />
       <item itemvalue="Python.MAKEMIGRATIONS" />
       <item itemvalue="Python.MIGRATE" />
       <item itemvalue="Python.RUN SERVER DHCP" />
       <item itemvalue="Python.RUNSERVER EHTERNET" />
+      <item itemvalue="Django Server.RUNSERVER ETHERNET" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -244,6 +257,8 @@
       <workItem from="1749570923885" duration="5807000" />
       <workItem from="1749594751634" duration="27000" />
       <workItem from="1749787034159" duration="2107000" />
+      <workItem from="1750193687724" duration="47000" />
+      <workItem from="1750665843886" duration="99000" />
     </task>
     <servers />
   </component>

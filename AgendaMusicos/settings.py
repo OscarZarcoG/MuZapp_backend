@@ -7,11 +7,11 @@ SECRET_KEY = 'django-insecure-rilvrsf+se3hgnq4#&!ufkvffl5iof$+-2*#7exrw8kxbt#$re
 
 DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['192.168.1.78', '192.168.77.113']
+#ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
-     'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'userAPI',
     'GIGS',
 ]
 
@@ -127,6 +128,17 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
 }
+
+""" REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'EXCEPTION_HANDLER': 'core.exceptions.custom_exception_handler',
+} """
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

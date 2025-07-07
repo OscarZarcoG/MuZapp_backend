@@ -4,15 +4,25 @@ from .models import Cliente, Equipo_Audio, Catering, Peticion, Repertorio, Fotos
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('nombre_cliente', 'telefono_cliente', 'frecuencia', 'is_active', 'created_at')
-    list_filter = ('is_active', 'frecuencia', 'created_at')
-    search_fields = ('nombre_cliente', 'telefono_cliente')
+    list_display = ('nombre_completo', 'telefono', 'email', 'tipo_cliente', 'frecuencia', 'is_active', 'created_at')
+    list_filter = ('is_active', 'tipo_cliente', 'frecuencia', 'ciudad', 'created_at')
+    search_fields = ('nombre', 'apellidos', 'telefono', 'email', 'empresa')
     ordering = ('-created_at',)
     readonly_fields = ('created_at', 'updated_at', 'deleted_at')
     
     fieldsets = (
-        ('Información del Cliente', {
-            'fields': ('nombre_cliente', 'telefono_cliente', 'redes_sociales', 'frecuencia')
+        ('Información Personal', {
+            'fields': ('nombre', 'apellidos', 'tipo_cliente')
+        }),
+        ('Información de Contacto', {
+            'fields': ('telefono', 'email', 'direccion', 'ciudad', 'codigo_postal')
+        }),
+        ('Información Empresarial', {
+            'fields': ('empresa', 'nif_cif'),
+            'classes': ('collapse',)
+        }),
+        ('Otros Datos', {
+            'fields': ('redes_sociales', 'frecuencia', 'observaciones')
         }),
         ('Estado', {
             'fields': ('is_active',)
@@ -26,20 +36,37 @@ class ClienteAdmin(admin.ModelAdmin):
 
 @admin.register(Equipo_Audio)
 class EquipoAudioAdmin(admin.ModelAdmin):
-    list_display = ('marca', 'modelo', 'numero_bocinas', 'precio', 'is_active', 'created_at')
-    list_filter = ('is_active', 'marca', 'numero_bocinas', 'created_at')
-    search_fields = ('marca', 'modelo', 'descripcion')
+    list_display = ('nombre', 'tipo', 'marca', 'modelo', 'estado', 'precio_compra', 'is_active', 'created_at')
+    list_filter = ('is_active', 'tipo', 'estado', 'marca', 'created_at')
+    search_fields = ('nombre', 'marca', 'modelo', 'numero_serie', 'observaciones')
     ordering = ('-created_at',)
     readonly_fields = ('created_at', 'updated_at', 'deleted_at')
     
     fieldsets = (
-        ('Información del Equipo', {
-            'fields': ('marca', 'modelo', 'numero_bocinas', 'descripcion', 'precio')
+        ('Información Básica', {
+            'fields': ('nombre', 'tipo', 'estado')
         }),
-        ('Estado', {
+        ('Detalles del Equipo', {
+            'fields': ('marca', 'modelo', 'numero_serie', 'ubicacion')
+        }),
+        ('Información Financiera', {
+            'fields': ('precio_compra', 'fecha_compra', 'garantia_hasta')
+        }),
+        ('Observaciones', {
+            'fields': ('observaciones',)
+        }),
+        ('Imagen', {
+            'fields': ('imagen',)
+        }),
+        ('Campos Legacy', {
+            'fields': ('numero_bocinas', 'descripcion'),
+            'classes': ('collapse',),
+            'description': 'Campos mantenidos por compatibilidad'
+        }),
+        ('Estado del Sistema', {
             'fields': ('is_active',)
         }),
-        ('Fechas', {
+        ('Fechas del Sistema', {
             'fields': ('created_at', 'updated_at', 'deleted_at'),
             'classes': ('collapse',)
         })

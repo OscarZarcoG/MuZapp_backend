@@ -1,0 +1,18 @@
+# Dependencias para generación de contratos
+
+# Para generación de documentos DOCX
+python-docx==1.1.2
+
+# Para conversión DOCX a PDF (método lento pero fiel al formato)
+docx2pdf==0.1.8
+pywin32==310
+
+# Para generación directa de PDF (método rápido)
+reportlab==4.2.5
+
+# Dependencias adicionales
+lxml==5.4.0
+Pillow>=9.0.0
+colorama==0.4.6
+tqdm==4.67.1
+typing-extensions==4.14.0

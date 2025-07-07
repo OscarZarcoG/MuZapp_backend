@@ -27,8 +27,9 @@ class BaseModel(models.Model):
         abstract = True
 
     def delete(self, using=None, keep_parents=False):
+        from django.utils import timezone
         self.is_active = False
-        self.deleted_at = models.DateTimeField(auto_now_add=True)
+        self.deleted_at = timezone.now()
         self.save()
 
     def restore(self):
@@ -45,57 +46,240 @@ class BaseModel(models.Model):
 
 """ C L I E N T E S """
 class Cliente(BaseModel):
-    nombre_cliente = models.CharField(
+    TIPO_CLIENTE_CHOICES = [
+        ('particular', 'Particular'),
+        ('empresa', 'Empresa'),
+        ('organizacion', 'Organización'),
+    ]
+    
+    FRECUENCIA_CHOICES = [
+        ('frecuente', 'Frecuente'),
+        ('regular', 'Regular'),
+        ('ocasional', 'Ocasional'),
+    ]
+    
+    # Información personal
+    nombre = models.CharField(
         max_length=255,
-        verbose_name="Nombre del cliente",
-        default="Cliente"
+        verbose_name="Nombre",
+        help_text="Nombre del cliente"
     )
-    telefono_cliente = models.CharField(
+    apellidos = models.CharField(
         max_length=255,
-        verbose_name="Teléfono del cliente",
-        default="Teléfono"
+        verbose_name="Apellidos",
+        blank=True,
+        help_text="Apellidos del cliente"
     )
+    
+    # Información de contacto
+    telefono = models.CharField(
+        max_length=20,
+        verbose_name="Teléfono",
+        help_text="Número de teléfono del cliente"
+    )
+    email = models.EmailField(
+        verbose_name="Email",
+        blank=True,
+        help_text="Correo electrónico del cliente"
+    )
+    
+    # Dirección
+    direccion = models.CharField(
+        max_length=500,
+        verbose_name="Dirección",
+        blank=True,
+        help_text="Dirección completa del cliente"
+    )
+    ciudad = models.CharField(
+        max_length=100,
+        verbose_name="Ciudad",
+        blank=True,
+        help_text="Ciudad del cliente"
+    )
+    codigo_postal = models.CharField(
+        max_length=10,
+        verbose_name="Código Postal",
+        blank=True,
+        help_text="Código postal del cliente"
+    )
+    
+    # Tipo de cliente
+    tipo_cliente = models.CharField(
+        max_length=20,
+        choices=TIPO_CLIENTE_CHOICES,
+        default='particular',
+        verbose_name="Tipo de Cliente",
+        help_text="Tipo de cliente: particular, empresa u organización"
+    )
+    
+    # Información empresarial (opcional)
+    empresa = models.CharField(
+        max_length=255,
+        verbose_name="Empresa/Organización",
+        blank=True,
+        help_text="Nombre de la empresa u organización (si aplica)"
+    )
+    nif_cif = models.CharField(
+        max_length=20,
+        verbose_name="NIF/CIF",
+        blank=True,
+        help_text="Número de identificación fiscal (si aplica)"
+    )
+    
+    # Observaciones
+    observaciones = models.TextField(
+        verbose_name="Observaciones",
+        blank=True,
+        help_text="Notas adicionales sobre el cliente"
+    )
+    
     redes_sociales = models.URLField(
         verbose_name="Redes sociales",
-        default="Redes sociales",
-        blank=True
+        blank=True,
+        help_text="Enlaces a redes sociales del cliente"
     )
-    frecuencia = models.PositiveIntegerField(
-        verbose_name="Frecuencia"
+    frecuencia = models.CharField(
+        max_length=20,
+        choices=FRECUENCIA_CHOICES,
+        default='ocasional',
+        verbose_name="Frecuencia",
+        help_text="Frecuencia de contratación del cliente"
     )
+    
     class Meta:
         verbose_name = "Cliente"
         verbose_name_plural = "Clientes"
+        ordering = ['nombre', 'apellidos']
+    
     def __str__(self):
-        return f"{self.nombre_cliente}"
+        if self.apellidos:
+            return f"{self.nombre} {self.apellidos}"
+        return self.nombre
+    
+    @property
+    def nombre_completo(self):
+        """Devuelve el nombre completo del cliente"""
+        if self.apellidos:
+            return f"{self.nombre} {self.apellidos}"
+        return self.nombre
+    
+    @property
+    def es_empresa(self):
+        """Indica si el cliente es una empresa u organización"""
+        return self.tipo_cliente in ['empresa', 'organizacion']
 
 
 """ A U D I O """
 class Equipo_Audio(BaseModel):
+    TIPO_EQUIPO_CHOICES = [
+        ('altavoces', 'Altavoces'),
+        ('microfonos', 'Micrófonos'),
+        ('mezcladores', 'Mezcladores'),
+        ('amplificadores', 'Amplificadores'),
+        ('instrumentos', 'Instrumentos'),
+        ('iluminacion', 'Iluminación'),
+        ('cables', 'Cables'),
+        ('soportes', 'Soportes'),
+        ('otros', 'Otros'),
+    ]
+    
+    ESTADO_CHOICES = [
+        ('disponible', 'Disponible'),
+        ('en_uso', 'En Uso'),
+        ('mantenimiento', 'Mantenimiento'),
+        ('averiado', 'Averiado'),
+        ('vendido', 'Vendido'),
+    ]
+    
+    nombre = models.CharField(
+        max_length=200,
+        verbose_name="Nombre del Equipo",
+        default="Equipo sin nombre"
+    )
+    tipo = models.CharField(
+        max_length=50,
+        choices=TIPO_EQUIPO_CHOICES,
+        default='altavoces',
+        verbose_name="Tipo de Equipo"
+    )
     marca = models.CharField(
         max_length=200,
-        verbose_name="Marca"
+        verbose_name="Marca",
+        blank=True
     )
     modelo = models.CharField(
         max_length=200,
-        verbose_name="Modelo"
+        verbose_name="Modelo",
+        blank=True
     )
-    numero_bocinas = models.PositiveIntegerField(
-        verbose_name="Número de bocinas"
+    numero_serie = models.CharField(
+        max_length=200,
+        verbose_name="Número de Serie",
+        blank=True
     )
-
-    descripcion = models.TextField(
-        verbose_name="Descripción"
+    estado = models.CharField(
+        max_length=50,
+        choices=ESTADO_CHOICES,
+        default='disponible',
+        verbose_name="Estado"
     )
-    precio = models.PositiveIntegerField(
+    precio_compra = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
         validators=[MinValueValidator(0)],
-        verbose_name="Precio"
+        verbose_name="Precio de Compra",
+        null=True,
+        blank=True
     )
+    fecha_compra = models.DateField(
+        verbose_name="Fecha de Compra",
+        null=True,
+        blank=True
+    )
+    garantia_hasta = models.DateField(
+        verbose_name="Garantía Hasta",
+        null=True,
+        blank=True
+    )
+    ubicacion = models.CharField(
+        max_length=200,
+        verbose_name="Ubicación",
+        blank=True
+    )
+    observaciones = models.TextField(
+        verbose_name="Observaciones",
+        blank=True
+    )
+    
+    # Campos legacy para compatibilidad
+    numero_bocinas = models.PositiveIntegerField(
+        verbose_name="Número de bocinas",
+        null=True,
+        blank=True
+    )
+    descripcion = models.TextField(
+        verbose_name="Descripción",
+        blank=True
+    )
+    imagen = models.ImageField(
+        verbose_name="Imagen del equipo",
+        upload_to="equipos_audio/",
+        blank=True,
+        null=True
+    )
+    
     class Meta:
         verbose_name = "Equipo de audio"
         verbose_name_plural = "Equipos de audio"
+        ordering = ['nombre', 'marca', 'modelo']
+    
     def __str__(self):
-        return f"{self.marca} {self.modelo}"
+        if self.nombre:
+            return self.nombre
+        elif self.marca and self.modelo:
+            return f"{self.marca} {self.modelo}"
+        else:
+            return f"Equipo {self.id}"
 
 
 """ C A T E R I N G """
@@ -209,7 +393,7 @@ class Contrato(BaseModel):
         max_length=255,
         choices=STATUS_EVENTO_CHOICES,
         verbose_name="Estado del evento",
-        default="Pendiente"
+        default="pending"
     )# SE SUPONE QUE DEBE ESTAR CAMBIANDO DE ACUERDO A LAS HORAS Y FECHAS QUE SE EJECUTA, ADEMÁS DEBE CAMBIAR SI YA HUBO UN DEPÓSITO PARA CONFIRMAR SU EVENTO
     # No ha dado adelanto ni confirmado = Pendiente
     # Dió adelanto el cliente = Confirmado
@@ -225,7 +409,7 @@ class Contrato(BaseModel):
         max_length=255,
         choices=TIPO_EVENTO_CHOICES,
         verbose_name="Tipo de evento",
-        default="Cumpleaños"
+        default="birthday"
     )
     nombre_festejado = models.CharField(
         max_length=255,
@@ -394,7 +578,31 @@ class Contrato(BaseModel):
         verbose_name_plural = "Contratos"
         ordering = ['-fecha_evento']
     
+    def clean(self):
+        """Validaciones del modelo"""
+        from django.core.exceptions import ValidationError
+        
+        # Validar que la hora de inicio sea anterior a la hora final (excepto eventos que cruzan medianoche)
+        if self.hora_inicio and self.hora_final:
+            # Permitir eventos que cruzan medianoche (ej: 20:00 a 02:00)
+            if self.hora_inicio == self.hora_final:
+                raise ValidationError({
+                    'hora_final': 'La hora de finalización debe ser diferente a la hora de inicio.'
+                })
+        
+        # Validar conflictos de horarios
+        if self.fecha_evento and self.hora_inicio and self.hora_final:
+            try:
+                self.validar_conflictos_horarios()
+            except ValidationError as e:
+                raise ValidationError({
+                    'fecha_evento': str(e)
+                })
+    
     def save(self, *args, **kwargs):
+        # Ejecutar validaciones del modelo
+        self.full_clean()
+        
         # Generar número de contrato automáticamente
         if not self.numero_contrato:
             self.numero_contrato = self.generar_numero_contrato()
@@ -409,32 +617,99 @@ class Contrato(BaseModel):
             self.pago_restante = self.calcular_pago_restante()
             self.porcentaje = self.calcular_porcentaje()
         
-        # Actualizar estado del evento
+        # Actualizar estado del evento basado en adelantos
         self.actualizar_estado_evento()
         
         super().save(*args, **kwargs)
     
     def generar_numero_contrato(self):
-        """Genera número de contrato con formato YYYYMMDD-NNN"""
-        from django.utils import timezone
-        fecha_hoy = timezone.now().date()
-        fecha_str = fecha_hoy.strftime('%Y%m%d')
+        """Genera número de contrato con formato YYYYMMDD-NNN con numeración secuencial global"""
+        if not self.fecha_evento:
+            from django.utils import timezone
+            fecha_base = timezone.now().date()
+        else:
+            fecha_base = self.fecha_evento
+            
+        fecha_str = fecha_base.strftime('%Y%m%d')
         
-        # Buscar el último contrato del día
-        ultimo_contrato = Contrato.objects.filter(
-            numero_contrato__startswith=fecha_str
-        ).order_by('-numero_contrato').first()
+        # Buscar el último contrato de todos los contratos para obtener el número secuencial más alto
+        ultimo_contrato = Contrato.objects.exclude(
+            numero_contrato__isnull=True
+        ).exclude(
+            numero_contrato=''
+        ).order_by('-id').first()
         
-        if ultimo_contrato:
-            ultimo_numero = int(ultimo_contrato.numero_contrato.split('-')[1])
-            nuevo_numero = ultimo_numero + 1
+        if ultimo_contrato and ultimo_contrato.numero_contrato:
+            try:
+                ultimo_numero = int(ultimo_contrato.numero_contrato.split('-')[1])
+                nuevo_numero = ultimo_numero + 1
+            except (IndexError, ValueError):
+                nuevo_numero = 1
         else:
             nuevo_numero = 1
         
         return f"{fecha_str}-{nuevo_numero:04d}"
     
+    def validar_conflictos_horarios(self):
+        """Valida que no haya conflictos de horarios en el mismo día con separación mínima de 1 hora"""
+        from django.core.exceptions import ValidationError
+        from datetime import datetime, timedelta
+        
+        # Buscar otros contratos en la misma fecha
+        contratos_mismo_dia = Contrato.objects.filter(
+            fecha_evento=self.fecha_evento,
+            estado_evento__in=['confirmed', 'pending', 'in_progress']
+        ).exclude(id=self.id if self.id else None)
+        
+        inicio_actual = datetime.combine(self.fecha_evento, self.hora_inicio)
+        final_actual = datetime.combine(self.fecha_evento, self.hora_final)
+        
+        # Si la hora final es menor que la inicial, el evento termina al día siguiente
+        if self.hora_final < self.hora_inicio:
+            final_actual += timedelta(days=1)
+        
+        for contrato in contratos_mismo_dia:
+            inicio_existente = datetime.combine(contrato.fecha_evento, contrato.hora_inicio)
+            final_existente = datetime.combine(contrato.fecha_evento, contrato.hora_final)
+            
+            # Si la hora final es menor que la inicial, el evento termina al día siguiente
+            if contrato.hora_final < contrato.hora_inicio:
+                final_existente += timedelta(days=1)
+            
+            # Verificar si hay solapamiento o falta de separación mínima
+            # Los eventos se solapan si: inicio_actual < final_existente AND final_actual > inicio_existente
+            hay_solapamiento = inicio_actual < final_existente and final_actual > inicio_existente
+            
+            if hay_solapamiento:
+                raise ValidationError(
+                    f"Conflicto de horarios: Ya existe un evento el {self.fecha_evento} "
+                    f"de {contrato.hora_inicio} a {contrato.hora_final}. "
+                    f"Los eventos no pueden solaparse."
+                )
+            
+            # Verificar separación mínima de 1 hora entre eventos
+            # Si el nuevo evento es después del existente
+            if inicio_actual >= final_existente:
+                diferencia = (inicio_actual - final_existente).total_seconds() / 3600
+                if diferencia < 1:
+                    raise ValidationError(
+                        f"Conflicto de horarios: Ya existe un evento el {self.fecha_evento} "
+                        f"de {contrato.hora_inicio} a {contrato.hora_final}. "
+                        f"Debe haber al menos 1 hora de diferencia entre eventos."
+                    )
+            
+            # Si el nuevo evento es antes del existente
+            elif final_actual <= inicio_existente:
+                diferencia = (inicio_existente - final_actual).total_seconds() / 3600
+                if diferencia < 1:
+                    raise ValidationError(
+                        f"Conflicto de horarios: Ya existe un evento el {self.fecha_evento} "
+                        f"de {contrato.hora_inicio} a {contrato.hora_final}. "
+                        f"Debe haber al menos 1 hora de diferencia entre eventos."
+                    )
+    
     def calcular_tiempo_total(self):
-        """Calcula el tiempo total del evento en horas"""
+        """Calcula el tiempo total del evento en horas con redondeo hacia arriba después de 45 minutos"""
         if not self.hora_inicio or not self.hora_final:
             return 0
         
@@ -446,7 +721,17 @@ class Contrato(BaseModel):
             final += timedelta(days=1)
         
         diferencia = final - inicio
-        return int(diferencia.total_seconds() / 3600)  # Convertir a horas
+        total_segundos = diferencia.total_seconds()
+        horas_exactas = total_segundos / 3600
+        
+        # Redondear hacia arriba si los minutos son >= 45
+        horas_enteras = int(horas_exactas)
+        minutos_restantes = (horas_exactas - horas_enteras) * 60
+        
+        if minutos_restantes >= 45:
+            return horas_enteras + 1
+        else:
+            return horas_enteras if horas_enteras > 0 else 1  # Mínimo 1 hora
     
     def calcular_pago_total(self):
         """Calcula el pago total del evento"""
@@ -465,7 +750,7 @@ class Contrato(BaseModel):
         return (self.pago_adelanto / self.pago_total) * 100
     
     def actualizar_estado_evento(self):
-        """Actualiza el estado del evento según las condiciones"""
+        """Actualiza el estado del evento según las condiciones basadas en adelantos y fechas"""
         from django.utils import timezone
         ahora = timezone.now()
         fecha_evento_datetime = datetime.combine(self.fecha_evento, self.hora_inicio)
@@ -475,28 +760,40 @@ class Contrato(BaseModel):
         if self.hora_final < self.hora_inicio:
             fecha_final_datetime += timedelta(days=1)
         
-        # Lógica de estados
+        # Lógica de estados mejorada
         if self.estado_evento == 'cancelled':
             return  # No cambiar si está cancelado
         
-        if self.pago_adelanto > 0 and ahora.date() < self.fecha_evento:
-            self.estado_evento = 'confirmed'
-        elif ahora.date() == self.fecha_evento and ahora.time() >= self.hora_inicio and ahora.time() <= self.hora_final:
-            self.estado_evento = 'in_progress'
-        elif ahora > fecha_final_datetime.replace(tzinfo=timezone.get_current_timezone()):
+        # Verificar si el evento ya terminó
+        if ahora > fecha_final_datetime.replace(tzinfo=timezone.get_current_timezone()):
             self.estado_evento = 'completed'
-        elif self.pago_adelanto == 0:
+        # Verificar si el evento está en progreso
+        elif (ahora.date() == self.fecha_evento and 
+              ahora.time() >= self.hora_inicio and 
+              ahora.time() <= self.hora_final) or \
+             (self.hora_final < self.hora_inicio and 
+              ahora.date() == self.fecha_evento and 
+              ahora.time() >= self.hora_inicio) or \
+             (self.hora_final < self.hora_inicio and 
+              ahora.date() == self.fecha_evento + timedelta(days=1) and 
+              ahora.time() <= self.hora_final):
+            self.estado_evento = 'in_progress'
+        # Verificar si hay adelanto para confirmar
+        elif self.pago_adelanto > 0:
+            self.estado_evento = 'confirmed'
+        # Sin adelanto, queda pendiente
+        else:
             self.estado_evento = 'pending'
     
     def generar_contrato_pdf(self):
-        """Genera el contrato en formato PDF"""
-        # Esta función se implementará con la librería de generación de documentos
-        pass
+        """Genera el contrato en formato PDF usando ReportLab (rápido)"""
+        from .pdf_generator import generar_contrato_pdf_reportlab
+        return generar_contrato_pdf_reportlab(self)
     
     def generar_contrato_docx(self):
         """Genera el contrato en formato DOCX"""
-        # Esta función se implementará con la librería de generación de documentos
-        pass
+        from .utils import generar_contrato_docx
+        return generar_contrato_docx(self)
     
     def __str__(self):
         return f"Contrato {self.numero_contrato} - {self.titulo}"
