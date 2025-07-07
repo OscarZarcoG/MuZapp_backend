@@ -41,7 +41,7 @@ AgendaMusicos/
 1.  **Clonar el repositorio**:
 
     ```bash
-    git clone <url-del-repositorio>
+    git clone https://github.com/OscarZarcoG/AgendaMusicos.git
     cd AgendaMusicos
     ```
 
@@ -98,6 +98,11 @@ La API está disponible bajo el prefijo `/api/`.
 -   `POST /api/user/signup/`: Registro de un nuevo usuario.
 -   `POST /api/user/login/`: Inicio de sesión. Devuelve un token de autenticación.
 -   `POST /api/user/logout/`: Cierre de sesión. Requiere token de autenticación.
+
+## 👤 Autor
+
+-   **Oscar Zarco G**
+-   **GitHub:** [OscarZarcoG](https://github.com/OscarZarcoG)
 
 ### Gigs y Contratos (`/api/`)
 
