@@ -1,4 +1,4 @@
-# userAPI/urls.py
+# AUTH/urls.py
 from django.urls import path
 from .views import UserSignUpView, UserLoginView, UserLogoutView
 

@@ -25,7 +25,7 @@ El proyecto sigue una estructura modular basada en aplicaciones de Django, dise�
 AgendaMusicos/
 ├── AgendaMusicos/         # Configuración principal del proyecto Django.
 ├── GIGS/                  # App para la gestión de eventos, clientes y contratos.
-├── userAPI/               # App para la autenticación y gestión de usuarios.
+├── AUTH/                  # App para la autenticación y gestión de usuarios.
 ├── core/                  # Componentes transversales (excepciones, respuestas).
 ├── tests/                 # Pruebas unitarias, de integración y rendimiento.
 ├── manage.py              # Script de gestión de Django.
@@ -33,7 +33,7 @@ AgendaMusicos/
 ```
 
 - **`GIGS`**: Contiene toda la lógica de negocio relacionada con los eventos, contratos y clientes.
-- **`userAPI`**: Gestiona la autenticación, registro y perfiles de usuario.
+- **`AUTH`**: Gestiona la autenticación, registro y perfiles de usuario.
 - **`core`**: Componentes transversales como manejadores de excepciones y respuestas personalizadas.
 
 ## ⚙️ Configuración del Entorno

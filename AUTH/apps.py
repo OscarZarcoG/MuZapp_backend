@@ -1,10 +1,10 @@
-# userAPI/apps.py
+# AUTH/apps.py
 from django.apps import AppConfig
 
 
-class UserapiConfig(AppConfig):
+class AuthConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'userAPI'
+    name = 'AUTH'
 
     def ready(self):
-        import userAPI.signals
+        import AUTH.signals

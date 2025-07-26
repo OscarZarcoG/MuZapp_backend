@@ -1,4 +1,4 @@
-# userAPI/responses.py
+# AUTH/responses.py
 from rest_framework import status
 from core.responses import BaseSuccessResponse
 

@@ -1,4 +1,4 @@
-# userAPI/views.py
+# AUTH/views.py
 from core.exceptions import DatabaseError, BaseCustomException, AuthenticationFailed, InternalServerError
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authentication import TokenAuthentication

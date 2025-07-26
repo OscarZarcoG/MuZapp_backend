@@ -1,7 +1,7 @@
-# userAPI/management/commands/repair_profiles.py
+# AUTH/management/commands/repair_profiles.py
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from userAPI.models import UserProfile
+from AUTH.models import UserProfile
 
 
 class Command(BaseCommand):

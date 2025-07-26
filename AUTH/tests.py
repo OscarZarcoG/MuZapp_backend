@@ -1,4 +1,4 @@
-# userAPI/tests.py
+# AUTH/tests.py
 from django.test import TestCase
 
 # Create your tests here.

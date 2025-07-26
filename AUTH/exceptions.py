@@ -1,4 +1,4 @@
-# userAPI/exceptions.py
+# AUTH/exceptions.py
 from core.exceptions import BaseCustomException
 from rest_framework import status
 
