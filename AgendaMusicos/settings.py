@@ -7,6 +7,8 @@ SECRET_KEY = 'django-insecure-rilvrsf+se3hgnq4#&!ufkvffl5iof$+-2*#7exrw8kxbt#$re
 
 DEBUG = True
 
+AUTH_USER_MODEL = 'AUTH.UserCustom'
+
 #ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -22,7 +24,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'AUTH',
-    'GIGS',
 ]
 
 MIDDLEWARE = [
@@ -124,20 +125,14 @@ CORS_ALLOW_HEADERS = [
 ]
 
 REST_FRAMEWORK = {
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
-    'DEFAULT_PERMISSION_CLASSES': [],
-}
-
-""" REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'EXCEPTION_HANDLER': 'core.exceptions.custom_exception_handler',
-} """
+    # 'EXCEPTION_HANDLER': 'core.exceptions.custom_exception_handler',
+}
 
 
 MEDIA_URL = '/media/'

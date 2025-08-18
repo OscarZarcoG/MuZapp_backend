@@ -3,45 +3,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
-
-"""  B A S E   M O D E L   """
-class BaseModel(models.Model):
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name="Estado"
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Fecha de creación"
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Última actualización"
-    )
-    deleted_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        verbose_name="Fecha de borrado"
-    )
-    class Meta:
-        abstract = True
-
-    def delete(self, using=None, keep_parents=False):
-        from django.utils import timezone
-        self.is_active = False
-        self.deleted_at = timezone.now()
-        self.save()
-
-    def restore(self):
-        self.is_active = True
-        self.deleted_at = None
-        self.save()
-
-    def is_deleted(self):
-        return self.deleted_at is not None
-
-    def __str__(self):
-        return f"{self.__class__.__name__} {self.id}"
+from core.models import BaseModel
 
 
 """ C L I E N T E S """
