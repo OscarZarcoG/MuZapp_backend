@@ -1,10 +1,20 @@
 # AUTH/models.py
-from django.contrib.auth.models import AbstractUser
-from core.models import BaseModel 
+from django.contrib.auth.models import AbstractUser, UserManager
+from core.models import BaseModel, BaseModelManager
 from django.db import models
 
 
+class UserCustomManager(BaseModelManager, UserManager):
+    def get_queryset(self):
+        return super(UserManager, self).get_queryset().filter(deleted_at__isnull=True)
+    
+    def _create_user(self, username, email, password, **extra_fields):
+        return super(BaseModelManager, self)._create_user(username, email, password, **extra_fields)
+
+
 class UserCustom(AbstractUser, BaseModel):
+    objects = UserCustomManager()
+    
     username = models.CharField(
         max_length=50,
         unique=True,
@@ -92,5 +102,3 @@ class UserCustom(AbstractUser, BaseModel):
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
         ordering = ['-created_at']
-
-    

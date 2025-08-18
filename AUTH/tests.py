@@ -313,7 +313,8 @@ class UserCustomViewSetTest(APITestCase):
         }
         
         response = self.client.post(self.login_url, data)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('errors', response.data)
     
     def test_logout_success(self):
         """Test logout exitoso"""
@@ -549,7 +550,8 @@ class AuthenticationIntegrationTest(APITestCase):
         }
         
         response = self.client.post(reverse('auth-login'), login_data)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('errors', response.data)
 
 
 class AuthExceptionsTest(TestCase):
