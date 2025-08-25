@@ -1,3 +1,4 @@
+""" 
 from django.contrib import admin
 from .models import Cliente, Equipo_Audio, Catering, Peticion, Repertorio, Fotos_Evento, Contrato
 
@@ -217,3 +218,7 @@ class ContratoAdmin(admin.ModelAdmin):
         queryset.update(estado_evento='cancelled')
         self.message_user(request, f'{queryset.count()} contratos marcados como cancelados.')
     marcar_como_cancelado.short_description = 'Marcar como cancelado'
+
+
+
+"""

@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 
 
-class ClientsConfig(AppConfig):
+class AudioConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'CLIENTS'
+    name = 'GIGS.AUDIO'
+    verbose_name = 'Equipos de Audio'

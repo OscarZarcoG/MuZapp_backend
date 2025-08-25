@@ -24,7 +24,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'AUTH',
-    'GIGS'
+    'GIGS',
+    'GIGS.CLIENTS',
+    'GIGS.AUDIO',
+    'GIGS.CATERING',
+    'GIGS.CLIENTS_REQUESTS',
+    'GIGS.CONTRACT',
+    'GIGS.EVENT_PHOTOS',
+    'GIGS.REPERTORIE',
 ]
 
 MIDDLEWARE = [

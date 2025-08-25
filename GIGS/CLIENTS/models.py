@@ -21,6 +21,8 @@ class Client(BaseModel):
         ('regular', 'Regular'),
         ('ocasional', 'Ocasional'),
     ]
+
+
     
     # Información personal
     nombre = models.CharField(
@@ -46,11 +48,8 @@ class Client(BaseModel):
         blank=True,
         help_text="Correo electrónico del cliente"
     )
-    redes_sociales = models.URLField(
-        verbose_name="Redes sociales",
-        blank=True,
-        help_text="Enlaces a redes sociales del cliente"
-    )
+    
+
     
     # Dirección
     direccion = models.CharField(
@@ -130,3 +129,57 @@ class Client(BaseModel):
     def es_empresa(self):
         """Indica si el cliente es una empresa u organización"""
         return self.tipo_cliente in ['empresa', 'organizacion']
+
+
+class ClienteSocialMedia(BaseModel):
+    """Modelo para manejar múltiples redes sociales por cliente"""
+    
+    REDES_SOCIALES = [
+        ('instagram', 'Instagram'),
+        ('twitter', 'Twitter'),
+        ('facebook', 'Facebook'),
+        ('linkedin', 'LinkedIn'),
+        ('youtube', 'YouTube'),
+        ('tiktok', 'TikTok'),
+        ('pinterest', 'Pinterest'),
+        ('snapchat', 'Snapchat'),
+        ('whatsapp', 'WhatsApp'),
+        ('telegram', 'Telegram'),
+        ('reddit', 'Reddit'),
+        ('other', 'Otro'),
+    ]
+    
+    cliente = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name='redes_sociales',
+        verbose_name="Cliente"
+    )
+    
+    tipo_red_social = models.CharField(
+        max_length=20,
+        choices=REDES_SOCIALES,
+        verbose_name="Tipo de red social",
+        help_text="Tipo de red social"
+    )
+    
+    enlace = models.URLField(
+        verbose_name="Enlace",
+        help_text="Enlace a la red social"
+    )
+    
+    nombre_usuario = models.CharField(
+        max_length=100,
+        verbose_name="Nombre de usuario",
+        blank=True,
+        help_text="Nombre de usuario en la red social (opcional)"
+    )
+    
+    class Meta:
+        verbose_name = "Red Social del Cliente"
+        verbose_name_plural = "Redes Sociales del Cliente"
+        unique_together = ['cliente', 'tipo_red_social', 'enlace']
+        ordering = ['cliente', 'tipo_red_social']
+    
+    def __str__(self):
+        return f"{self.cliente.nombre_completo} - {self.get_tipo_red_social_display()}"

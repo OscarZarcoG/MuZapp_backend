@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 
 
-class ClientsConfig(AppConfig):
+class RepertorieConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'CLIENTS'
+    name = 'GIGS.REPERTORIE'
+    verbose_name = 'Repertorio'
