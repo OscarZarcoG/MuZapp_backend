@@ -1,0 +1,625 @@
+{
+	"info": {
+		"_postman_id": "29518871-de520ec9-420e-458b-9fec-ceeb1f5c055e",
+		"name": "MuZapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "ME",
+					"id": "29518871-e804da74-5511-4cb0-ae95-a605db0a1731",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 0eae82324c470628523f0e67b175cf8efa0a63c2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/me/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST ALL USERS",
+					"id": "29518871-6f50f0dd-3360-4382-a615-87ce6484a5e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST ALL USERS ROLE",
+					"id": "29518871-ca6e1d84-019b-4433-8baa-88a667db79ae",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/users-by-role/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"users-by-role",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST ONE USER",
+					"id": "29518871-1986a74b-418f-4047-9e6e-d8545746dab6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "29518871-30f711e1-d237-4e17-a1ff-5f4e42ee3bc2"
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "LOGIN",
+					"id": "29518871-19b89371-62e2-4e8a-a44d-81e2259d8ba8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"daniel\",\r\n    \"password\": \"dani123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER",
+					"id": "29518871-00f4d6b9-9de6-4629-a8f4-9bd76086ac87",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"pedrosola\",\r\n    \"first_name\": \"pedro\",\r\n    \"last_name\": \"solan\",\r\n    \"email\": \"pedro@gmail.com\",\r\n    \"password\": \"pedro123\",\r\n    \"password_confirm\": \"pedro123\",\r\n    \"phone\": \"0123454321\",\r\n    \"birthday\": null,\r\n    \"gender\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/register/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGOUT",
+					"id": "29518871-75ba7cd2-7e8f-4a92-867c-c7734f6bd8fb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 2bdad6062ff89c6195d1061b8cbfc4119b962104",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/logout/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CHANGE PASSWORD",
+					"id": "29518871-44bec589-0cdb-478b-91cb-7c01dfd46800",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 0eae82324c470628523f0e67b175cf8efa0a63c2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\": \"pedro123\",\r\n    \"new_password\": \"pedro321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/change-password/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"change-password",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "29518871-78408541-50bc-4424-8bea-b0531ce4def3"
+		},
+		{
+			"name": "PUT / PATCH",
+			"item": [
+				{
+					"name": "CHANGE ROLE",
+					"id": "29518871-8f3c0479-5395-4b06-9838-87b70584a4d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"client\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/6/change-user-role/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"6",
+								"change-user-role",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PROFILE",
+					"id": "29518871-d6cf632a-34b6-40c4-bebe-d4abc6391583",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"daniel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PROFILE 2",
+					"id": "29518871-742cf969-90e5-47c3-9c54-2e1267810d95",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"daniel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/update-profile/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"update-profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PROFILE COMPLETE",
+					"id": "29518871-2cbf542f-f951-4bab-bb1f-2c5bf39c77e3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"username\": \"daniel\",\r\n        \"first_name\": \"Oscar Daniel\",\r\n        \"last_name\": \"Zarco González\",\r\n        \"email\": \"daniel@gmail.com\",\r\n        \"password\": \"dani123\",\r\n        \"phone\": \"7291428946\",\r\n        \"birthday\": \"2003-12-18\",\r\n        \"gender\": \"male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESTORE USER (ROOT) no funciona",
+					"id": "29518871-452edc48-84b2-4bee-b1d5-5bff53d25f6e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/6/restore/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"6",
+								"restore",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "29518871-550383d5-6646-4488-9dfe-edb760388ad8"
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "SOFT DELETE (ROOT)",
+					"id": "29518871-9a0147dc-958e-4f88-9e08-756b12310fe4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/6/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HARD DELETE (ROOT)",
+					"id": "29518871-74bf6a9b-90f5-41b2-b1e0-ae7b0f1fefd3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 434ce0f4db4a5b4fe471ee9f8f29acd4a23803ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/auth/6/hard-delete/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"auth",
+								"6",
+								"hard-delete",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "29518871-4f47c75f-a2d7-48f1-a5c7-fd8f69135719"
+		}
+	]
+}
