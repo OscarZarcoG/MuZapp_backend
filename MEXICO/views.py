@@ -9,7 +9,6 @@ from .serializers import (
     PaisSerializer, EstadoSerializer, MunicipioSerializer, 
     ColoniaSerializer, ColoniaDetailSerializer
 )
-from rest_framework import viewsets
 
 
 class ColoniaListView(generics.ListAPIView):
@@ -129,32 +128,6 @@ class EstadoListView(generics.ListAPIView):
 
 class MunicipioListView(generics.ListAPIView):
     """Vista para listar todos los municipios"""
-    queryset = Municipio.objects.select_related('estado__pais').all()
-    serializer_class = MunicipioSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['estado']
-    search_fields = ['nombre', 'estado__nombre']
-    ordering_fields = ['nombre']
-    ordering = ['nombre']
-
-class ColoniaViewSet(viewsets.ModelViewSet):
-    queryset = Colonia.objects.select_related('municipio__estado__pais').all()
-    serializer_class = ColoniaSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['codigo_postal', 'ciudad', 'municipio', 'asentamiento']
-    search_fields = ['nombre', 'ciudad', 'municipio__nombre', 'municipio__estado__nombre']
-    ordering_fields = ['nombre', 'codigo_postal', 'ciudad']
-    ordering = ['nombre']
-
-class EstadoViewSet(viewsets.ModelViewSet):
-    queryset = Estado.objects.select_related('pais').all()
-    serializer_class = EstadoSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['nombre', 'pais__nombre']
-    ordering_fields = ['nombre']
-    ordering = ['nombre']
-
-class MunicipioViewSet(viewsets.ModelViewSet):
     queryset = Municipio.objects.select_related('estado__pais').all()
     serializer_class = MunicipioSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
