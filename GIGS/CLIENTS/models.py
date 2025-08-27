@@ -49,26 +49,42 @@ class Client(BaseModel):
         help_text="Correo electrónico del cliente"
     )
     
-
-    
-    # Dirección
-    direccion = models.CharField(
-        max_length=500,
-        verbose_name="Dirección",
-        blank=True,
-        help_text="Dirección completa del cliente"
-    )
-    ciudad = models.CharField(
-        max_length=100,
-        verbose_name="Ciudad",
-        blank=True,
-        help_text="Ciudad del cliente"
-    )
+    # Dirección estructurada basada en datos de México
     codigo_postal = models.CharField(
         max_length=10,
         verbose_name="Código Postal",
         blank=True,
         help_text="Código postal del cliente"
+    )
+    colonia = models.CharField(
+        max_length=100,
+        verbose_name="Colonia",
+        blank=True,
+        help_text="Colonia o asentamiento del cliente"
+    )
+    municipio = models.CharField(
+        max_length=100,
+        verbose_name="Municipio",
+        blank=True,
+        help_text="Municipio del cliente"
+    )
+    estado = models.CharField(
+        max_length=100,
+        verbose_name="Estado",
+        blank=True,
+        help_text="Estado del cliente"
+    )
+    pais = models.CharField(
+        max_length=50,
+        verbose_name="País",
+        default="México",
+        help_text="País del cliente"
+    )
+    direccion_completa = models.CharField(
+        max_length=500,
+        verbose_name="Dirección Completa",
+        blank=True,
+        help_text="Calle, número y referencias adicionales"
     )
     
     # Tipo de cliente

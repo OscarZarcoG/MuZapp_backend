@@ -14,12 +14,12 @@ class ClienteSocialMediaInline(admin.TabularInline):
 class ClientAdmin(admin.ModelAdmin):
     inlines = [ClienteSocialMediaInline]
     list_display = (
-        'nombre_completo', 'telefono', 'direccion', 'observaciones',
+        'nombre_completo', 'telefono', 'colonia', 'municipio', 'estado',
         'email', 'frecuencia'
     )
     list_filter = (
         'tipo_cliente', 'frecuencia', 'is_active', 
-        'created_at', 'ciudad'
+        'created_at', 'estado', 'municipio'
     )
     search_fields = (
         'nombre', 'apellidos', 'email', 'telefono', 
@@ -36,7 +36,7 @@ class ClientAdmin(admin.ModelAdmin):
             'fields': ('telefono', 'email')
         }),
         ('Dirección', {
-            'fields': ('direccion', 'ciudad', 'codigo_postal')
+            'fields': ('codigo_postal', 'colonia', 'municipio', 'estado', 'pais', 'direccion_completa')
         }),
         ('Información Empresarial', {
             'fields': ('empresa', 'nif_cif'),
