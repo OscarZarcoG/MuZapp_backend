@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'GIGS.CONTRACT',
     'GIGS.EVENT_PHOTOS',
     'GIGS.REPERTORIE',
+    'MEXICO',
 ]
 
 MIDDLEWARE = [
@@ -50,11 +51,11 @@ ROOT_URLCONF = 'AgendaMusicos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'AgendaMusicos' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -75,9 +76,17 @@ DATABASES = {
             'PASSWORD': 'dani123',
             'HOST': 'localhost',
             'PORT': '5432',
-    }
+    },
+    'mexico': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mexico',
+        'USER': 'postgres',
+        'PASSWORD': 'dani123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
-
+DATABASE_ROUTERS = ['db_router.MexicoRouter']
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -137,7 +146,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+        #'rest_framework.permissions.IsAuthenticated',
     ],
     # 'EXCEPTION_HANDLER': 'core.exceptions.custom_exception_handler',
 }

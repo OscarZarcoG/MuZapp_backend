@@ -13,5 +13,5 @@ router.register(r'fotos-evento', views.EventPhotoViewSet)
 router.register(r'contratos', views.ContractViewSet)
 
 urlpatterns = [
-    path('agenda/', include(router.urls)),
+    path('', include(router.urls)),
 ]

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio MuZapp Backend</title>
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #2b6cb0;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .endpoints {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+        .endpoint {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            width: 320px;
+            transition: box-shadow 0.2s;
+        }
+        .endpoint:hover {
+            box-shadow: 0 2px 8px rgba(44, 82, 130, 0.12);
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MuZapp Backend</h1>
+        <p>Selecciona un endpoint para explorar la API:</p>
+        <div class="endpoints">
+            <div class="endpoint"><a href="/api/agenda/">Agenda (GIGS)</a></div>
+            <div class="endpoint"><a href="/api/mexico/">México (Direcciones)</a></div>
+            <div class="endpoint"><a href="/api/user/auth/">Usuarios (Auth)</a></div>
+        </div>
+    </div>
+</body>
+</html>
