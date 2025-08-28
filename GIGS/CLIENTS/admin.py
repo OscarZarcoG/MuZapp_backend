@@ -30,12 +30,15 @@ class ClientAdminForm(forms.ModelForm):
                     cleaned_data['colonia'] = datos.get('colonia', '')
                     cleaned_data['municipio'] = datos.get('municipio', '')
                     cleaned_data['estado'] = datos.get('estado', '')
-                    cleaned_data['pais'] = datos.get('pais', '')
+                    cleaned_data['pais'] = datos.get('pais', '') or 'México'
                 # Si hay varias colonias, solo municipio/estado/pais
                 elif 'colonias' in datos:
                     cleaned_data['municipio'] = datos.get('municipio', '')
                     cleaned_data['estado'] = datos.get('estado', '')
-                    cleaned_data['pais'] = datos.get('pais', '')
+                    cleaned_data['pais'] = datos.get('pais', '') or 'México'
+        # Validar que país nunca quede vacío
+        if not cleaned_data.get('pais'):
+            cleaned_data['pais'] = 'México'
         return cleaned_data
 
 @admin.register(Client)
