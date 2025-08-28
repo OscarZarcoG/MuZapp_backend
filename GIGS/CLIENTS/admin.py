@@ -22,20 +22,27 @@ class ClientAdminForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         codigo_postal = cleaned_data.get('codigo_postal')
+        # Solo autocompletar si los campos están vacíos o no fueron modificados manualmente
         if codigo_postal:
             datos = autocompletar_inputs_de_direccion_por_codigo_postal(codigo_postal)
             if datos:
                 # Si hay una sola colonia, autocompletar todo
                 if 'colonia' in datos:
                     cleaned_data['colonia'] = datos.get('colonia', '')
-                    cleaned_data['municipio'] = datos.get('municipio', '')
-                    cleaned_data['estado'] = datos.get('estado', '')
-                    cleaned_data['pais'] = datos.get('pais', '') or 'México'
-                # Si hay varias colonias, solo municipio/estado/pais
+                    if not self.data.get('municipio') or not cleaned_data.get('municipio'):
+                        cleaned_data['municipio'] = datos.get('municipio', '')
+                    if not self.data.get('estado') or not cleaned_data.get('estado'):
+                        cleaned_data['estado'] = datos.get('estado', '')
+                    if not self.data.get('pais') or not cleaned_data.get('pais'):
+                        cleaned_data['pais'] = datos.get('pais', '') or 'México'
+                # Si hay varias colonias, solo autocompletar municipio/estado/pais si están vacíos
                 elif 'colonias' in datos:
-                    cleaned_data['municipio'] = datos.get('municipio', '')
-                    cleaned_data['estado'] = datos.get('estado', '')
-                    cleaned_data['pais'] = datos.get('pais', '') or 'México'
+                    if not self.data.get('municipio') or not cleaned_data.get('municipio'):
+                        cleaned_data['municipio'] = datos.get('municipio', '')
+                    if not self.data.get('estado') or not cleaned_data.get('estado'):
+                        cleaned_data['estado'] = datos.get('estado', '')
+                    if not self.data.get('pais') or not cleaned_data.get('pais'):
+                        cleaned_data['pais'] = datos.get('pais', '') or 'México'
         # Validar que país nunca quede vacío
         if not cleaned_data.get('pais'):
             cleaned_data['pais'] = 'México'
