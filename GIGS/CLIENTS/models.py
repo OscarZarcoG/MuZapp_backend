@@ -80,12 +80,6 @@ class Client(BaseModel):
         default="México",
         help_text="País del cliente"
     )
-    direccion_completa = models.CharField(
-        max_length=500,
-        verbose_name="Dirección Completa",
-        blank=True,
-        help_text="Calle, número y referencias adicionales"
-    )
     
     # Tipo de cliente
     tipo_cliente = models.CharField(
