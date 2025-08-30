@@ -38,11 +38,12 @@
                             options += '<option value="' + col.nombre + '" data-municipio="' + (col.municipio_nombre || '') + '" data-estado="' + (col.estado_nombre || '') + '" data-pais="' + (col.pais_nombre || '') + '">' + col.nombre + '</option>';
                         });
                         $colonia.html(options);
-                        // Solo autocompletar si los campos están vacíos
-                        var first = data.colonias[0];
-                        setIfEmpty($municipio, first.municipio_nombre);
-                        setIfEmpty($estado, first.estado_nombre);
-                        setIfEmpty($pais, first.pais_nombre);
+                        // Always replace information when postal code changes
+                        setIfEmpty($municipio, data.colonias[0].municipio_nombre);
+                        setIfEmpty($estado, data.colonias[0].estado_nombre);
+                        setIfEmpty($pais, data.colonias[0].pais_nombre);
+                    } else {
+                        limpiarCampos();
                     }
                 }
             });
