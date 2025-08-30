@@ -16,25 +16,28 @@ def autocompletar_inputs_de_direccion_por_codigo_postal(codigo_postal):
         response = requests.get(url, timeout=5)
         if response.status_code == 200:
             data = response.json()
-            # Si hay información completa (solo una colonia)
-            if 'informacion_completa' in data:
-                info = data['informacion_completa']
-                return {
-                    'colonia': info.get('colonia', ''),
-                    'municipio': info.get('municipio', ''),
-                    'estado': info.get('estado', ''),
-                    'pais': info.get('pais', ''),
-                    'ciudad': info.get('ciudad', ''),
-                    'asentamiento': info.get('asentamiento', '')
-                }
-            # Si hay varias colonias, devolver la lista
-            elif 'colonias' in data:
-                return {
-                    'colonias': data['colonias'],
-                    'municipio': data['colonias'][0].get('municipio', '') if data['colonias'] else '',
-                    'estado': data['colonias'][0].get('estado', '') if data['colonias'] else '',
-                    'pais': data['colonias'][0].get('pais', '') if data['colonias'] else ''
-                }
+            # Si hay colonias en la respuesta
+            if 'colonias' in data and data['colonias']:
+                colonias = data['colonias']
+                if len(colonias) == 1:
+                    # Solo una colonia, devolver información completa
+                    colonia = colonias[0]
+                    return {
+                        'colonia': colonia.get('nombre', ''),
+                        'municipio': colonia.get('municipio_nombre', ''),
+                        'estado': colonia.get('estado_nombre', ''),
+                        'pais': colonia.get('pais_nombre', '') or 'México',
+                        'ciudad': colonia.get('ciudad', ''),
+                        'asentamiento': colonia.get('asentamiento', '')
+                    }
+                else:
+                    # Múltiples colonias, devolver la lista
+                    return {
+                        'colonias': colonias,
+                        'municipio': colonias[0].get('municipio_nombre', '') if colonias else '',
+                        'estado': colonias[0].get('estado_nombre', '') if colonias else '',
+                        'pais': colonias[0].get('pais_nombre', '') or 'México' if colonias else 'México'
+                    }
         return None
     except Exception:
         return None
