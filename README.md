@@ -1,6 +1,6 @@
 # Agenda Músicos - Backend
 
-El backend de Agenda Músicos es un sistema robusto desarrollado con Django y Django REST Framework, diseñado para gestionar toda la información relacionada con eventos musicales, clientes, contratos y usuarios.
+El backend de Agenda Músicos es un sistema robusto desarrollado con Django y Django REST Framework, diseñado para gestionar toda la información relacionada con eventos musicales, clientes, contratos y usuarios. Incluye una funcionalidad avanzada de conversión de música de YouTube a MP3.
 
 ## 🚀 Características Principales
 
@@ -8,7 +8,8 @@ El backend de Agenda Músicos es un sistema robusto desarrollado con Django y Dj
 - **Administración de Clientes**: Manejo de la información de los clientes.
 - **Generación de Contratos**: Sistema avanzado para generar contratos en formatos DOCX y PDF con diferentes niveles de calidad y velocidad.
 - **Autenticación de Usuarios**: Sistema completo de registro, inicio y cierre de sesión basado en tokens.
-- **API RESTful**: Una API bien estructurada para interactuar con el frontend y otros servicios.
+- **Conversión de Música**: Sistema de conversión de videos de YouTube a archivos MP3 de alta calidad.
+- **API RESTful**: Una API bien estructurada para interactuar with el frontend y otros servicios.
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -26,8 +27,10 @@ AgendaMusicos/
 ├── AgendaMusicos/         # Configuración principal del proyecto Django.
 ├── GIGS/                  # App para la gestión de eventos, clientes y contratos.
 ├── AUTH/                  # App para la autenticación y gestión de usuarios.
+├── MUSIC/                 # App para conversión de música de YouTube a MP3.
+├── MEXICO/                # App para datos geográficos de México.
 ├── core/                  # Componentes transversales (excepciones, respuestas).
-├── tests/                 # Pruebas unitarias, de integración y rendimiento.
+├── media/                 # Archivos multimedia (audio convertido, imágenes).
 ├── manage.py              # Script de gestión de Django.
 └── requirements.txt       # Dependencias del proyecto.
 ```
@@ -35,6 +38,42 @@ AgendaMusicos/
 - **`GIGS`**: Contiene toda la lógica de negocio relacionada con los eventos, contratos y clientes.
 - **`AUTH`**: Gestiona la autenticación, registro y perfiles de usuario.
 - **`core`**: Componentes transversales como manejadores de excepciones y respuestas personalizadas.
+
+## 📋 Requisitos del Sistema
+
+### Dependencias del Sistema
+
+- **Python 3.8+**: Lenguaje de programación principal
+- **PostgreSQL**: Base de datos (opcional, se puede usar SQLite para desarrollo)
+- **FFmpeg**: Requerido para conversión de audio de YouTube
+
+### Instalación de FFmpeg
+
+#### Windows
+```bash
+# Usando winget (recomendado)
+winget install ffmpeg
+
+# O descargar desde https://ffmpeg.org/download.html
+```
+
+#### macOS
+```bash
+# Usando Homebrew
+brew install ffmpeg
+```
+
+#### Linux (Ubuntu/Debian)
+```bash
+sudo apt update
+sudo apt install ffmpeg
+```
+
+#### Verificar instalación
+```bash
+ffmpeg -version
+ffprobe -version
+```
 
 ## ⚙️ Configuración del Entorno
 
@@ -52,7 +91,7 @@ AgendaMusicos/
     source .venv/bin/activate  # En Windows: .venv\Scripts\activate
     ```
 
-3.  **Instalar dependencias**:
+3.  **Instalar dependencias de Python**:
 
     ```bash
     pip install -r requirements.txt
@@ -89,7 +128,7 @@ AgendaMusicos/
 
     El servidor estará disponible en `http://127.0.0.1:8000`.
 
-## Endpoints de la API
+## 📡 Endpoints de la API
 
 La API está disponible bajo el prefijo `/api/`.
 
@@ -99,10 +138,24 @@ La API está disponible bajo el prefijo `/api/`.
 -   `POST /api/user/login/`: Inicio de sesión. Devuelve un token de autenticación.
 -   `POST /api/user/logout/`: Cierre de sesión. Requiere token de autenticación.
 
-## 👤 Autor
+### Conversión de Música (`/api/music/api/conversions/`)
 
--   **Oscar Zarco G**
--   **GitHub:** [OscarZarcoG](https://github.com/OscarZarcoG)
+-   `POST /api/music/api/conversions/convert/`: Convierte un video de YouTube a MP3.
+    ```json
+    {
+        "youtube_url": "https://www.youtube.com/watch?v=VIDEO_ID",
+        "quality": "high"  // "high", "medium", "low"
+    }
+    ```
+-   `GET /api/music/api/conversions/`: Lista todas las conversiones del usuario.
+-   `GET /api/music/api/conversions/{id}/`: Obtiene detalles de una conversión específica.
+-   `GET /api/music/api/conversions/{id}/download/`: Descarga el archivo MP3 convertido.
+-   `DELETE /api/music/api/conversions/{id}/`: Elimina una conversión.
+
+### Interfaz Web de Música
+
+-   `GET /api/music/`: Página principal de conversión de música.
+-   `GET /api/music/conversions/`: Lista de conversiones realizadas.
 
 ### Gigs y Contratos (`/api/`)
 
@@ -117,6 +170,104 @@ Este proyecto fue desarrollado por **Oscar Zarco**.
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/OscarZarcoG)
 
+## 🚀 Despliegue en Servidor
+
+### Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+# Configuración de Django
+SECRET_KEY=tu_clave_secreta_muy_segura
+DEBUG=False
+ALLOWED_HOSTS=tu-dominio.com,www.tu-dominio.com,localhost
+
+# Base de datos
+DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/nombre_bd
+
+# Configuración de archivos estáticos y media
+STATIC_ROOT=/ruta/a/archivos/estaticos
+MEDIA_ROOT=/ruta/a/archivos/media
+
+# Configuración de CORS (si es necesario)
+CORS_ALLOWED_ORIGINS=https://tu-frontend.com,https://www.tu-frontend.com
+```
+
+### Configuración del Servidor Web
+
+#### Usando Gunicorn + Nginx
+
+1. **Instalar Gunicorn**:
+   ```bash
+   pip install gunicorn
+   ```
+
+2. **Crear archivo de servicio systemd** (`/etc/systemd/system/agendamusicos.service`):
+   ```ini
+   [Unit]
+   Description=Agenda Musicos Django App
+   After=network.target
+
+   [Service]
+   User=www-data
+   Group=www-data
+   WorkingDirectory=/ruta/a/tu/proyecto
+   Environment="PATH=/ruta/a/tu/venv/bin"
+   ExecStart=/ruta/a/tu/venv/bin/gunicorn --workers 3 --bind unix:/ruta/a/tu/proyecto/agendamusicos.sock AgendaMusicos.wsgi:application
+   Restart=always
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. **Configurar Nginx** (`/etc/nginx/sites-available/agendamusicos`):
+   ```nginx
+   server {
+       listen 80;
+       server_name tu-dominio.com www.tu-dominio.com;
+
+       location = /favicon.ico { access_log off; log_not_found off; }
+       
+       location /static/ {
+           root /ruta/a/tu/proyecto;
+       }
+       
+       location /media/ {
+           root /ruta/a/tu/proyecto;
+       }
+
+       location / {
+           include proxy_params;
+           proxy_pass http://unix:/ruta/a/tu/proyecto/agendamusicos.sock;
+       }
+   }
+   ```
+
+### Comandos de Despliegue
+
+```bash
+# Recopilar archivos estáticos
+python manage.py collectstatic --noinput
+
+# Aplicar migraciones
+python manage.py migrate
+
+# Crear superusuario (opcional)
+python manage.py createsuperuser
+
+# Reiniciar servicios
+sudo systemctl restart agendamusicos
+sudo systemctl restart nginx
+```
+
+### Consideraciones de Seguridad
+
+- Asegúrate de que FFmpeg esté instalado en el servidor
+- Configura límites de tamaño de archivo para uploads
+- Implementa rate limiting para las conversiones
+- Usa HTTPS en producción
+- Configura backups regulares de la base de datos
+
 ## ✅ Pruebas
 
 El proyecto incluye un completo sistema de pruebas. Para ejecutar todas las pruebas, utiliza el siguiente comando:
@@ -126,3 +277,26 @@ python tests/test_runner.py
 ```
 
 Esto ejecutará pruebas de modelos, vistas, serializadores, integración y rendimiento, generando un informe detallado en la consola.
+
+## 🔧 Solución de Problemas
+
+### Error: "ffprobe and ffmpeg not found"
+
+**Solución**: Instala FFmpeg siguiendo las instrucciones en la sección "Instalación de FFmpeg".
+
+### Error de conversión de YouTube
+
+**Posibles causas**:
+- URL de YouTube inválida
+- Video privado o restringido geográficamente
+- Problemas de conectividad
+- FFmpeg no instalado correctamente
+
+### Problemas de permisos en archivos media
+
+**Solución**:
+```bash
+# En Linux/macOS
+sudo chown -R www-data:www-data /ruta/a/media/
+sudo chmod -R 755 /ruta/a/media/
+```

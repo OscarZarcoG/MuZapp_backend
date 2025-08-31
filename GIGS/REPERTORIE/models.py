@@ -56,8 +56,8 @@ class RepertorioManager(models.Manager):
         return self.order_by('-created_at')
 
 
-class Repertorio(BaseModel):
-    """Modelo para gestionar el repertorio musical"""
+class Generos(BaseModel):
+    objects = RepertorioManager()
     
     GENEROS_CHOICES = [
         ('pop', 'Pop'),
@@ -99,6 +99,15 @@ class Repertorio(BaseModel):
         ('otros', 'Otros'),
     ]
     
+    nombre = models.CharField(
+        max_length=255,
+        verbose_name="Nombre",
+        help_text="Nombre del género"
+    )
+    
+    
+
+class Repertorio(BaseModel):      
     DIFICULTAD_CHOICES = [
         ('facil', 'Fácil'),
         ('intermedio', 'Intermedio'),
@@ -106,28 +115,23 @@ class Repertorio(BaseModel):
         ('experto', 'Experto'),
     ]
     
-    # Información básica de la canción
     nombre_cancion = models.CharField(
         max_length=200,
         verbose_name='Nombre de la canción',
         help_text='Título de la canción'
     )
-    
     artista = models.CharField(
         max_length=200,
         verbose_name='Artista',
         help_text='Nombre del artista o banda'
     )
-    
-    genero = models.CharField(
-        max_length=50,
-        choices=GENEROS_CHOICES,
-        default='otros',
-        verbose_name='Género musical',
-        help_text='Género musical de la canción'
+    genero = models.ForeignKey(
+        Generos,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name='Género',
+        help_text='Género musical de la canción'
     )
-    
-    # Duración
     duracion = models.CharField(
         max_length=10,
         verbose_name='Duración',
@@ -135,7 +139,6 @@ class Repertorio(BaseModel):
         blank=True,
         null=True
     )
-    
     duracion_segundos = models.PositiveIntegerField(
         verbose_name='Duración en segundos',
         help_text='Duración total en segundos (calculado automáticamente)',
@@ -143,8 +146,6 @@ class Repertorio(BaseModel):
         blank=True,
         validators=[MinValueValidator(1), MaxValueValidator(7200)]  # Máximo 2 horas
     )
-    
-    # Información adicional
     dificultad = models.CharField(
         max_length=20,
         choices=DIFICULTAD_CHOICES,
@@ -152,7 +153,6 @@ class Repertorio(BaseModel):
         verbose_name='Dificultad',
         help_text='Nivel de dificultad para tocar la canción'
     )
-    
     tonalidad = models.CharField(
         max_length=10,
         verbose_name='Tonalidad',
@@ -160,7 +160,6 @@ class Repertorio(BaseModel):
         blank=True,
         null=True
     )
-    
     tempo = models.PositiveIntegerField(
         verbose_name='Tempo (BPM)',
         help_text='Tempo en beats por minuto',
@@ -168,8 +167,26 @@ class Repertorio(BaseModel):
         blank=True,
         validators=[MinValueValidator(40), MaxValueValidator(300)]
     )
-    
-    # Enlaces y recursos
+    progresion_acordes = models.TextField(
+        verbose_name='Acordes',
+        help_text='Acordes utilizados en la canción',
+        blank=True,
+        null=True
+    )    
+    letra = models.TextField(
+        verbose_name='Letra',
+        help_text='Letra de la canción',
+        blank=True,
+        null=True
+    )
+    # Debe ser en formato .mp3
+    pista_audio = models.FileField(
+        upload_to='pistas_audio/',
+        verbose_name='Pista de audio',
+        help_text='Pista de audio de la canción',
+        blank=True,
+        null=True
+    )
     link = models.URLField(
         verbose_name='Enlace',
         help_text='Enlace a YouTube, Spotify, etc.',
