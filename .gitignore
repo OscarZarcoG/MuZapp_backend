@@ -155,3 +155,6 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
+
+# Media files (heavy files)
+media/
