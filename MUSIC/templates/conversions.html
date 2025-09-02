@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Conversiones - Music Converter{% endblock %}
+{% block title %}MuConZapp - Conversiones{% endblock %}
 
 {% block content %}
 <div class="flex justify-between items-center mb-8">
@@ -137,7 +137,7 @@ async function deleteConversion(conversionId) {
     }
     
     try {
-        const response = await fetch(`/api/music/api/conversions/${conversionId}/`, {
+        const response = await fetch(`/api/music/url/conversions/${conversionId}/`, {
             method: 'DELETE',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Inicio - Music Converter{% endblock %}
+{% block title %}MuConZapp - Inicio{% endblock %}
 
 {% block content %}
 <div class="text-center mb-12">
@@ -129,7 +129,7 @@ form.addEventListener('submit', async (e) => {
     convertBtn.disabled = true;
     
     try {
-        const response = await fetch('/api/music/api/conversions/convert/', {
+        const response = await fetch('/api/music/url/conversions/convert/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ form.addEventListener('submit', async (e) => {
 
 downloadBtn.addEventListener('click', () => {
     if (currentConversionId) {
-        window.open(`/api/music/api/conversions/${currentConversionId}/download/`, '_blank');
+        window.open(`/api/music/url/conversions/${currentConversionId}/download/`, '_blank');
     }
 });
 

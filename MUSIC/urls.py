@@ -14,7 +14,7 @@ urlpatterns = [
     path('conversions/', ConversionsListView.as_view(), name='conversions_list'),
     
     # API endpoints
-    path('api/', include(router.urls)),
+    path('url/', include(router.urls)),
 ]
 
 # Los endpoints disponibles serán:
