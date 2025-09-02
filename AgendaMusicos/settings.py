@@ -164,3 +164,7 @@ REST_FRAMEWORK = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración de Spotify API
+SPOTIFY_CLIENT_ID = '718b40926a92488d9e8d3380c987f6e7'
+SPOTIFY_CLIENT_SECRET = 'afcfae478b244839885725c8a504c380'
