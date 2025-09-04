@@ -84,15 +84,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'dani123',
         'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'music': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'music',
-        'USER': 'postgres',
-        'PASSWORD': 'dani123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5432'
     }
 }
 DATABASE_ROUTERS = ['db_router.MexicoRouter']
