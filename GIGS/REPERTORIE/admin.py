@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.db.models import Count
-from .models import Repertorio
+from .models import Repertorio, Generos
 
 
 @admin.register(Repertorio)
@@ -212,3 +212,12 @@ class RepertorioAdmin(admin.ModelAdmin):
             f'{updated} canción(es) restaurada(s).'
         )
     restore_songs.short_description = "Restaurar canciones eliminadas"
+
+@admin.register(Generos)
+class GenerosAdmin(admin.ModelAdmin):
+    fields = ['nombre']
+    list_display = ['nombre']
+    search_fields = ['nombre']
+    ordering = ['nombre']
+    list_filter = ['is_active', 'created_at']
+    ordering = ['nombre']

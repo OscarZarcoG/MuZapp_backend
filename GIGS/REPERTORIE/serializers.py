@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
-from .models import Repertorio
+from .models import Repertorio, Generos
 
 
 class RepertorioSerializer(serializers.ModelSerializer):
@@ -304,3 +304,9 @@ class RepertorioSearchSerializer(serializers.Serializer):
             )
         
         return attrs
+
+
+class GenerosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Generos
+        fields = ['id', 'nombre', 'is_active', 'created_at', 'updated_at', 'deleted_at']

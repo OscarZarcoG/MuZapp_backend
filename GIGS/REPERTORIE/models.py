@@ -58,7 +58,6 @@ class RepertorioManager(models.Manager):
 
 class Generos(BaseModel):
     objects = RepertorioManager()
-    
     GENEROS_CHOICES = [
         ('pop', 'Pop'),
         ('rock', 'Rock'),
@@ -98,14 +97,13 @@ class Generos(BaseModel):
         ('instrumental', 'Instrumental'),
         ('otros', 'Otros'),
     ]
-    
     nombre = models.CharField(
         max_length=255,
         verbose_name="Nombre",
         help_text="Nombre del género"
     )
-    
-    
+    def __str__(self):
+        return self.nombre
 
 class Repertorio(BaseModel):      
     DIFICULTAD_CHOICES = [
