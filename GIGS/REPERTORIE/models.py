@@ -142,7 +142,7 @@ class Repertorio(BaseModel):
         help_text='Duración total en segundos (calculado automáticamente)',
         null=True,
         blank=True,
-        validators=[MinValueValidator(1), MaxValueValidator(7200)]  # Máximo 2 horas
+        validators=[MinValueValidator(1), MaxValueValidator(7200)]
     )
     dificultad = models.CharField(
         max_length=20,
@@ -177,7 +177,6 @@ class Repertorio(BaseModel):
         blank=True,
         null=True
     )
-    # Debe ser en formato .mp3
     pista_audio = models.FileField(
         upload_to='pistas_audio/',
         verbose_name='Pista de audio',
@@ -199,7 +198,6 @@ class Repertorio(BaseModel):
         null=True
     )
     
-    # Notas y observaciones
     notas = models.TextField(
         verbose_name='Notas',
         help_text='Notas adicionales sobre la canción',
@@ -207,7 +205,6 @@ class Repertorio(BaseModel):
         null=True
     )
     
-    # Información de uso
     veces_tocada = models.PositiveIntegerField(
         default=0,
         verbose_name='Veces tocada',
@@ -221,7 +218,6 @@ class Repertorio(BaseModel):
         blank=True
     )
     
-    # Etiquetas y categorización
     etiquetas = models.CharField(
         max_length=500,
         verbose_name='Etiquetas',
@@ -265,10 +261,8 @@ class Repertorio(BaseModel):
             return None
         
         try:
-            # Limpiar el formato
             duracion_limpia = self.duracion.strip()
             
-            # Dividir por ':'
             partes = duracion_limpia.split(':')
             
             if len(partes) == 2:  # MM:SS
@@ -286,7 +280,6 @@ class Repertorio(BaseModel):
         """Validaciones personalizadas"""
         super().clean()
         
-        # Validar formato de duración
         if self.duracion:
             patron_duracion = re.compile(r'^(?:(\d{1,2}):)?(\d{1,2}):(\d{2})$')
             if not patron_duracion.match(self.duracion.strip()):
@@ -294,7 +287,6 @@ class Repertorio(BaseModel):
                     'duracion': 'Formato inválido. Use MM:SS o HH:MM:SS'
                 })
         
-        # Validar tonalidad
         if self.tonalidad:
             patron_tonalidad = re.compile(r'^[A-G][#b]?[m]?$')
             if not patron_tonalidad.match(self.tonalidad.strip()):
@@ -305,7 +297,6 @@ class Repertorio(BaseModel):
     def __str__(self):
         return f"{self.nombre_cancion} - {self.artista}"
     
-    # Propiedades calculadas
     @property
     def duracion_formateada(self):
         """Devuelve la duración en formato legible"""
@@ -354,7 +345,6 @@ class Repertorio(BaseModel):
         diferencia = timezone.now() - self.ultima_vez_tocada
         return diferencia.days
     
-    # Métodos de utilidad
     def marcar_como_tocada(self):
         """Marca la canción como tocada, incrementando el contador"""
         self.veces_tocada += 1

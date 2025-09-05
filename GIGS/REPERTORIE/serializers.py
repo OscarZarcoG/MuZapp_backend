@@ -6,7 +6,6 @@ from .models import Repertorio, Generos
 class RepertorioSerializer(serializers.ModelSerializer):
     """Serializer completo para el modelo Repertorio"""
     
-    # Campos calculados de solo lectura
     duracion_formateada = serializers.ReadOnlyField()
     tiene_recursos = serializers.ReadOnlyField()
     etiquetas_lista = serializers.ReadOnlyField()
